@@ -1,24 +1,30 @@
-import "./App.css";
+// src/App.js
+
 import { Home } from "./pages/home";
 import { User } from "./pages/user";
 import { Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/navbar";
-import { useState } from "react";
+import { UserContextProvider } from "./contexts/user.context";
+import { ThemeContextProvider } from "./contexts/theme.context";
+import { Header } from "./components/header";
+import { Layout } from "./components/layout";
 
-// fork this sandbox and keep a copy
 export default function App() {
-  const [username, setUsername] = useState("bob89");
-
-  return (
-    <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home username={username} />} />
-        <Route
-          path="/user"
-          element={<User username={username} setUsername={setUsername} />}
-        />
-      </Routes>
-    </div>
-  );
+ return (
+   <div className="App">
+     <ThemeContextProvider>
+       <Layout>
+         <Header>
+           <Navbar />
+         </Header>
+         <UserContextProvider>
+           <Routes>
+             <Route path="/" element={<Home />} />
+             <Route path="/user" element={<User />} />
+           </Routes>
+         </UserContextProvider>
+       </Layout>
+     </ThemeContextProvider>
+   </div>
+ );
 }
